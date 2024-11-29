@@ -13,10 +13,11 @@ function init() {
     // Load 3D model (GLB file)
     const loader = new THREE.GLTFLoader();
     loader.load('https://raw.githubusercontent.com/CodellaDeville/IL-Monk-s-Insight/main/ImageToStl.com_monk.glb', function(gltf) {
+        console.log('Model Loaded Successfully!');
         model = gltf.scene;
         scene.add(model);
     }, undefined, function(error) {
-        console.error(error);
+        console.error('Error loading model:', error);
     });
 
     // Lighting
@@ -48,37 +49,3 @@ function init() {
 }
 
 init();
-
-// Chatbot interaction handling
-document.getElementById('askButton').addEventListener('click', function() {
-    const userInput = document.getElementById('userInput').value;
-    if (userInput.trim() !== "") {
-        addMessage('You: ' + userInput);
-        document.getElementById('userInput').value = '';
-        respondToUser(userInput);
-    }
-});
-
-// Display the chatbot messages
-function addMessage(message) {
-    const messagesDiv = document.getElementById('messages');
-    const messageElem = document.createElement('div');
-    messageElem.textContent = message;
-    messagesDiv.appendChild(messageElem);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-}
-
-// Simulate a chatbot response
-function respondToUser(input) {
-    setTimeout(() => {
-        let response = "I didn't understand that.";
-        // Example responses
-        if (input.toLowerCase().includes('hello')) {
-            response = "Hello! I'm your 3D buddy. Ask me anything!";
-        } else if (input.toLowerCase().includes('rotate')) {
-            response = "Sure! I'm rotating for you!";
-        }
-
-        addMessage('Bot: ' + response);
-    }, 1000);
-}
